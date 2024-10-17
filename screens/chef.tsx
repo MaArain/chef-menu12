@@ -17,6 +17,7 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
+  const [image, setimage] = useState('');
 
   const [errorMessage, setErrorMessage] = useState(''); 
 
@@ -33,6 +34,7 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
       name,
       description,
       price: parseFloat(price),
+      image,
     };
     
     addMenuItem(newItem);
@@ -87,6 +89,13 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
             value={price}
             onChangeText={setPrice}
             keyboardType="numeric"
+          />
+
+<TextInput
+            style={styles.input}
+            placeholder="image"
+            value={image}
+            onChangeText={setimage}
           />
           
           {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
