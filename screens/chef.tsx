@@ -42,6 +42,8 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
     setDescription('');
     setPrice('');
 
+    alert(`Course Added:\nType: R {courseType}\nName: R {name}\nDescription: R {description}\nPrice: R {price}`);
+
   };
 
   return (

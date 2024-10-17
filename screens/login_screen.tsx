@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button, TextInput, Modal } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
+import { useState } from 'react';
 
 // Navigation props allows screen to navigate through the app.
 type LoginScreenProps = {
@@ -8,6 +9,20 @@ type LoginScreenProps = {
 };
 
 export default function LoginScreen({ navigation }: LoginScreenProps) {
+
+  const [modalVisible,setModalVisible] = useState(false);
+  const [password, setPassword] = useState('');
+
+  const chefLoginCheck = () => {
+    if (password === '123'){
+      navigation.navigate('ChefScreen');
+      setModalVisible(false);
+      setPassword('');
+    }
+    else{
+      alert ('Invalid Password')
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -18,7 +33,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
         
         <Button 
           title='Chef Login' 
-          onPress={() => navigation.navigate('ChefScreen')} 
+          onPress={() => setModalVisible(true)} 
           color="black">
         </Button>
       </View>
@@ -38,6 +53,37 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       <View style={styles.backButtonContainer}>
         <Button title='Back' onPress={() => navigation.navigate('Login')} color="black"></Button>
       </View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}>
+          
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>Enter Chef Password:</Text>
+
+          <TextInput
+            style={styles.input}
+            placeholder="Password"
+            secureTextEntry
+            keyboardType='numeric'
+            value={password}
+            onChangeText={setPassword}>
+          </TextInput>
+
+          <Button title="Submit" onPress={chefLoginCheck} ></Button>
+
+          <Button title="Cancel" onPress={() => {
+              setModalVisible(false); 
+              setPassword('');  }} > 
+          </Button>
+
+        </View>
+      </Modal>
 
     </View>
   );
@@ -99,5 +145,27 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     justifyContent: 'space-between',
     gap: 20,
+  },
+  modalView: {
+    marginTop: 170,
+    margin: 20,
+    backgroundColor: 'white',
+    borderRadius: 20,
+    padding: 35,
+    alignItems: 'center',
+    elevation: 10,
+    gap: 10,
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 15,
+    paddingHorizontal: 10,
+    width: '80%',
   },
 });
