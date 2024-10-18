@@ -60,7 +60,7 @@ export default function App() {
         <Stack.Screen 
           name='ChefScreen' 
           children={({ navigation }) => 
-            <ChefScreen navigation={navigation} addMenuItem={addMenuItem} />} 
+        <ChefScreen navigation={navigation} addMenuItem={addMenuItem} />} 
         />
       </Stack.Navigator>
     </NavigationContainer>

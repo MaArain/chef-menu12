@@ -1,34 +1,30 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Button, TextInput, ScrollView, } from 'react-native'; // Make sure to import Picker
+import { StyleSheet, Text, View, Image, Button, TextInput, ScrollView } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { useState } from 'react';
 import { MenuItem } from './menu'; 
 import { Picker } from '@react-native-picker/picker';
+import * as ImagePicker from 'expo-image-picker';
 
-// Navigation props allows screen to navigate through the app.
 type ChefScreenProps = {
   navigation: NavigationProp<any>;
   addMenuItem: (item: MenuItem) => void;
 };
 
 export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps) {
-  // Manage input for adding items
   const [courseType, setCourseType] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-  const [image, setimage] = useState('');
+  const [image, setImage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const [errorMessage, setErrorMessage] = useState(''); 
-
-  // Function to handle errors in adding items
   const handleSubmit = () => {
     if (!courseType || !name || !description || !price) {
       setErrorMessage('Please fill in all fields.');
       return;
     }
 
-    // Add item to array
     const newItem: MenuItem = {
       courseType: courseType.toLowerCase(),
       name,
@@ -36,16 +32,34 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
       price: parseFloat(price),
       image,
     };
-    
+
     addMenuItem(newItem);
 
+    // Reset the fields
     setCourseType('');
     setName('');
     setDescription('');
     setPrice('');
+    setImage('');
 
-    alert(`Course Added:\nType: R {courseType}\nName: R {name}\nDescription: R {description}\nPrice: R {price}`);
+    alert(`Course Added:\nType: ${courseType}\nName: ${name}\nDescription: ${description}\nPrice: ${price}`);
+  };
 
+  const pickImage = async () => {
+    // Ask the user for the permission to access the media library
+    const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (permissionResult.granted === false) {
+      alert("Permission to access camera roll is required!");
+      return;
+    }
+
+    // Launch the image picker
+    const pickerResult = await ImagePicker.launchImageLibraryAsync();
+
+    if (!pickerResult.canceled) {
+      setImage(pickerResult.assets[0].uri); // Use the first selected image
+    }
   };
 
   return (
@@ -58,7 +72,6 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
           <Text style={styles.title}>Chef's Editing Page</Text>
         </View>
 
-        {/*Picker function for selection box */}
         <View style={styles.bottomContainer}>
           <Picker
             selectedValue={courseType}
@@ -91,13 +104,9 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
             keyboardType="numeric"
           />
 
-<TextInput
-            style={styles.input}
-            placeholder="image"
-            value={image}
-            onChangeText={setimage}
-          />
-          
+          <Button title="Pick an image from gallery" onPress={pickImage} />
+          {image ? <Image source={{ uri: image }} style={styles.imagePreview} /> : null}
+
           {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
           <Button title="Add" onPress={handleSubmit} color='black'/>
         </View>
@@ -147,6 +156,12 @@ const styles = StyleSheet.create({
     height: '80%',
     borderRadius: 10,
     marginBottom: 10,
+  },
+  imagePreview: {
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    marginTop: 10,
   },
   title: {
     fontSize: 24,

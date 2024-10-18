@@ -1,7 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button, ScrollView } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
-
 import { MenuItem } from './menu'; 
 
 // Navigation props allows screen to navigate through the app
@@ -15,7 +14,7 @@ export default function IndexScreen({ navigation, menu }: IndexScreenProps) {
   const starters = menu.filter(item => item.courseType === 'starters');
   const mains = menu.filter(item => item.courseType === 'mains');
   const desserts = menu.filter(item => item.courseType === 'desserts');
-
+  
   const totalItems = menu.length;
 
   // Function to calculate average price
@@ -39,21 +38,22 @@ export default function IndexScreen({ navigation, menu }: IndexScreenProps) {
           <Text style={styles.title}>Full Menu</Text>
         </View>
 
-        {/* .map function to look through and find items in array*/}
         <View style={styles.menuContainer}>
           <Text style={styles.sectionTitle}>Starters:</Text>
           {starters.map((item) => (
             <View key={item.name} style={styles.menuItem}>
+              <Image source={{ uri: item.image }} style={styles.itemImage} />
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemDescription}>{item.description}</Text>
               <Text style={styles.itemPrice}>R{item.price}</Text>
             </View>
           ))}
-          <Text style={styles.averagePrice}>Average Price: ${averageStarters}</Text>
+          <Text style={styles.averagePrice}>Average Price: R{averageStarters}</Text>
 
           <Text style={styles.sectionTitle}>Mains:</Text>
           {mains.map((item) => (
             <View key={item.name} style={styles.menuItem}>
+              <Image source={{ uri: item.image }} style={styles.itemImage} />
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemDescription}>{item.description}</Text>
               <Text style={styles.itemPrice}>R{item.price}</Text>
@@ -64,6 +64,7 @@ export default function IndexScreen({ navigation, menu }: IndexScreenProps) {
           <Text style={styles.sectionTitle}>Desserts:</Text>
           {desserts.map((item) => (
             <View key={item.name} style={styles.menuItem}>
+              <Image source={{ uri: item.image }} style={styles.itemImage} />
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemDescription}>{item.description}</Text>
               <Text style={styles.itemPrice}>R{item.price}</Text>
@@ -107,7 +108,6 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 3,
   },
-  
   bottomContainer: {
     height: 50,
     alignItems: 'center',
@@ -173,5 +173,11 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginVertical: 5,
     color: 'white',
+  },
+  itemImage: {
+    width: 100,
+    height: 100, 
+    borderRadius: 8,
+    marginBottom: 5,
   },
 });

@@ -46,7 +46,6 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
           <Button title='Starters' onPress={() => navigation.navigate('Starters')} color="black"></Button>
           <Button title='Main Courses' onPress={() => navigation.navigate('Main Courses')} color="black"></Button>
           <Button title='Desserts' onPress={() => navigation.navigate('Desserts')} color="black"></Button>
-          <Button title='Add item' onPress={() => navigation.navigate('ChefScreen')} color="black"></Button>
         </View>
       </View>
 

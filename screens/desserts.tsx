@@ -27,6 +27,7 @@ export default function DessertsScreen({ navigation, menu }: DessertsScreenProps
         <View style={styles.menuContainer}>
           {desserts.map((item) => (
             <View key={item.name} style={styles.menuItem}>
+              <Image source={{ uri: item.image }} style={styles.itemImage} />
               <Text style={styles.itemName}>{item.name}</Text>
               <Text style={styles.itemDescription}>{item.description}</Text>
               <Text style={styles.itemPrice}>R{item.price}</Text>
@@ -114,5 +115,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: '#333',
     marginTop: 5,
+  },
+  itemImage: {
+    width: 100,
+    height: 100,
+    borderRadius: 8,
+    marginBottom: 5,
   },
 });
