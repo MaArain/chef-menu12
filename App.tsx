@@ -4,13 +4,14 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from 'react';
 
 
-import HomeScreen from './screens/home_page';
-import StartersScreen from './screens/starters';
-import MainCoursesScreen from './screens/main_courses'; 
-import DessertsScreen from './screens/desserts'; 
-import ChefScreen from './screens/chef';
-import LoginScreen from './screens/login_screen'; 
-import menuData, { MenuItem } from './screens/menu'; 
+import HomeScreen from './screens/client/home_page';
+import StartersScreen from './screens/client/starters';
+import MainCoursesScreen from './screens/client/main_courses'; 
+import DessertsScreen from './screens/client/desserts'; 
+import ChefScreen from './screens/chef/chef';
+import LoginScreen from './screens/client/login_screen'; 
+import menuData, { MenuItem } from './screens/chef/menu'; 
+import EditScreen from './screens/chef/edit_screen';
 
 const Stack = createNativeStackNavigator(); 
 
@@ -58,10 +59,13 @@ export default function App() {
           children={({ navigation }) => <DessertsScreen navigation={navigation} menu={menu} />} 
         />
         <Stack.Screen 
-          name='ChefScreen' 
-          children={({ navigation }) => 
+        name='ChefScreen' 
+        children={({ navigation }) => 
         <ChefScreen navigation={navigation} addMenuItem={addMenuItem} />} 
         />
+        
+        <Stack.Screen name="EditScreen" component={EditScreen} />
+
       </Stack.Navigator>
     </NavigationContainer>
   );

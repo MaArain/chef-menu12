@@ -20,7 +20,7 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleSubmit = () => {
-    if (!courseType || !name || !description || !price) {
+    if (!courseType || !name || !description || !price || !image) {
       setErrorMessage('Please fill in all fields.');
       return;
     }
@@ -35,7 +35,6 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
 
     addMenuItem(newItem);
 
-    // Reset the fields
     setCourseType('');
     setName('');
     setDescription('');
@@ -58,7 +57,7 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
     const pickerResult = await ImagePicker.launchImageLibraryAsync();
 
     if (!pickerResult.canceled) {
-      setImage(pickerResult.assets[0].uri); // Use the first selected image
+      setImage(pickerResult.assets[0].uri);
     }
   };
 
@@ -68,7 +67,7 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.topContainer}>
-          <Image source={require('../assets/trialPic.png')} style={styles.image} />
+          <Image source={require('../../assets/trialPic.png')} style={styles.image} />
           <Text style={styles.title}>Chef's Editing Page</Text>
         </View>
 
@@ -104,11 +103,14 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
             keyboardType="numeric"
           />
 
-          <Button title="Pick an image from gallery" onPress={pickImage} />
+          <Button title="Add item image" onPress={pickImage} />
           {image ? <Image source={{ uri: image }} style={styles.imagePreview} /> : null}
+
+          <Button title="Edit menu" onPress={() => navigation.navigate('EditScreen')} />
 
           {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
           <Button title="Add" onPress={handleSubmit} color='black'/>
+
         </View>
       </ScrollView>
     </View>
@@ -150,6 +152,7 @@ const styles = StyleSheet.create({
     borderStyle: 'solid',
     borderColor: 'orange',
     borderWidth: 3,
+    gap:15,
   },
   image: {
     width: '100%',
@@ -173,14 +176,12 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: 'orange',
     borderWidth: 2,
-    marginBottom: 15,
     paddingHorizontal: 10,
     width: '80%',
   },
   picker: {
     height: 50,
     width: '80%',
-    marginBottom: 15,
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 5,

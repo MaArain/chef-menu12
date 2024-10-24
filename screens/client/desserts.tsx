@@ -1,17 +1,17 @@
-import { StatusBar } from 'expo-status-bar'; 
+import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button, ScrollView } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
-import { MenuItem } from './menu'; 
+import { MenuItem } from '../chef/menu'; 
 
 // Navigation props allows screen to navigate through the app.
-type StartersScreenProps = {
+type DessertsScreenProps = {
   navigation: NavigationProp<any>;
   menu: MenuItem[]; 
 };
 
-export default function StartersScreen({ navigation, menu }: StartersScreenProps) {
+export default function DessertsScreen({ navigation, menu }: DessertsScreenProps) {
   
-  const starters = menu.filter(item => item.courseType === 'starters');
+  const desserts = menu.filter(item => item.courseType === 'desserts');
 
   return (
     <View style={styles.container}>
@@ -19,13 +19,13 @@ export default function StartersScreen({ navigation, menu }: StartersScreenProps
 
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.topContainer}>
-          <Image source={require('../assets/trialPic.png')} style={styles.image} />
-          <Text style={styles.title}>Starters</Text>
+          <Image source={require('../../assets/trialPic.png')} style={styles.image} />
+          <Text style={styles.title}>Desserts</Text>
         </View>
 
         {/* .map function to look through and find items in array*/}
         <View style={styles.menuContainer}>
-          {starters.map((item) => (
+          {desserts.map((item) => (
             <View key={item.name} style={styles.menuItem}>
               <Image source={{ uri: item.image }} style={styles.itemImage} />
               <Text style={styles.itemName}>{item.name}</Text>
@@ -39,8 +39,8 @@ export default function StartersScreen({ navigation, menu }: StartersScreenProps
       <View style={styles.bottomContainer}>
         <Button 
           title='Back' 
-          onPress={() => navigation.navigate('Login')}
-          color="black"
+          onPress={() => navigation.navigate('Login')} 
+          color='black'
         />
       </View>
     </View>
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
   },
   itemImage: {
     width: 100,
-    height: 100, 
+    height: 100,
     borderRadius: 8,
     marginBottom: 5,
   },

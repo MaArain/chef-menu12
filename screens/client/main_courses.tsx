@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image, Button, ScrollView } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
-import { MenuItem } from './menu'; 
+import { MenuItem } from '../chef/menu';
 
 // Navigation props allows screen to navigate through the app.
 type MainCoursesScreenProps = {
@@ -19,7 +19,7 @@ export default function MainCoursesScreen({ navigation, menu }: MainCoursesScree
 
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.topContainer}>
-          <Image source={require('../assets/trialPic.png')} style={styles.image} />
+          <Image source={require('../../assets/trialPic.png')} style={styles.image} />
           <Text style={styles.title}>Main Courses</Text>
         </View>
 
