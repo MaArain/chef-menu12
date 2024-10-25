@@ -19,7 +19,7 @@ export default function MainCoursesScreen({ navigation, menu }: MainCoursesScree
 
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.topContainer}>
-          <Image source={require('../../assets/trialPic.png')} style={styles.image} />
+          <Image source={require('../../assets/chefimage.jpg')} style={styles.image} />
           <Text style={styles.title}>Main Courses</Text>
         </View>
 
@@ -81,12 +81,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '80%',
     borderRadius: 10,
-    marginBottom: 5,
+    margin: 5,
   },
   title: {
     fontSize: 24,
     color: '#333',
-    marginTop: 10,
     textDecorationLine: 'underline',
   },
   menuContainer: {

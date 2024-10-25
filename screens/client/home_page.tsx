@@ -34,7 +34,7 @@ export default function IndexScreen({ navigation, menu }: IndexScreenProps) {
       
       <ScrollView style={styles.scrollContainer}>
         <View style={styles.topContainer}>
-          <Image source={require('../../assets/trialPic.png')} style={styles.image} />
+          <Image source={require('../../assets/chefimage.jpg')} style={styles.image} />
           <Text style={styles.title}>Full Menu</Text>
         </View>
 
@@ -118,7 +118,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '80%',
     borderRadius: 10,
-    marginBottom: 5,
+    margin: 5,
   },
   title: {
     fontSize: 24,

@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Button, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { useState } from 'react';
 import { MenuItem } from './menu'; 
 import { Picker } from '@react-native-picker/picker';
 import * as ImagePicker from 'expo-image-picker';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 type ChefScreenProps = {
   navigation: NavigationProp<any>;
@@ -66,12 +67,11 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
       <StatusBar style="light" />
 
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.topContainer}>
-          <Image source={require('../../assets/trialPic.png')} style={styles.image} />
-          <Text style={styles.title}>Chef's Editing Page</Text>
-        </View>
 
         <View style={styles.bottomContainer}>
+          <Text style={styles.title}>Add items</Text>
+          <Button title="Edit full menu" onPress={() => navigation.navigate('EditScreen')} />
+
           <Picker
             selectedValue={courseType}
             onValueChange={(itemValue) => setCourseType(itemValue)}
@@ -103,10 +103,10 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
             keyboardType="numeric"
           />
 
-          <Button title="Add item image" onPress={pickImage} />
+          <TouchableOpacity onPress={pickImage}>
+           <Icon name="add-circle" size={50} color="blue" />
+          </TouchableOpacity>
           {image ? <Image source={{ uri: image }} style={styles.imagePreview} /> : null}
-
-          <Button title="Edit menu" onPress={() => navigation.navigate('EditScreen')} />
 
           {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
           <Button title="Add" onPress={handleSubmit} color='black'/>
@@ -128,19 +128,6 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     justifyContent: 'center',
   },
-  topContainer: {
-    height: 250,
-    backgroundColor: '#F5F5F5',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 20,
-    width: '100%',
-    padding: 10,
-    elevation: 2,
-    borderStyle: 'solid',
-    borderColor: 'black',
-    borderWidth: 3,
-  },
   bottomContainer: {
     flex: 1,
     backgroundColor: '#F5F5F5',
@@ -150,31 +137,24 @@ const styles = StyleSheet.create({
     paddingVertical: 20,
     borderRadius: 20,
     borderStyle: 'solid',
-    borderColor: 'orange',
+    borderColor: 'black',
     borderWidth: 3,
-    gap:15,
-  },
-  image: {
-    width: '100%',
-    height: '80%',
-    borderRadius: 10,
-    marginBottom: 10,
+    gap: 14,
   },
   imagePreview: {
-    width: '100%',
-    height: 200,
+    width: '50%',
+    height: 150,
     borderRadius: 10,
-    marginTop: 10,
   },
   title: {
     fontSize: 24,
     color: '#333',
-    marginTop: 10,
+    marginTop: 5,
     textDecorationLine: 'underline',
   },
   input: {
     height: 40,
-    borderColor: 'orange',
+    borderColor: 'black',
     borderWidth: 2,
     paddingHorizontal: 10,
     width: '80%',

@@ -29,7 +29,7 @@ export default function LoginScreen({ navigation }: LoginScreenProps) {
       <StatusBar style="light" />
 
       <View style={styles.topContainer}>
-        <Image source={require('../../assets/trialPic.png')} style={styles.image} />
+        <Image source={require('../../assets/chefimage.jpg')} style={styles.image} />
         
         <Button 
           title='Chef Login' 

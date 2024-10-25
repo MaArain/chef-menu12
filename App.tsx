@@ -3,7 +3,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState } from 'react';
 
-
 import HomeScreen from './screens/client/home_page';
 import StartersScreen from './screens/client/starters';
 import MainCoursesScreen from './screens/client/main_courses'; 
@@ -23,8 +22,8 @@ type StackParamList = {
   MainCourses: { menu: MenuItem[] }; 
   Desserts: { menu: MenuItem[] }; 
   ChefScreen: { addMenuItem: (item: MenuItem) => void }; 
+  EditScreen: { menu: MenuItem[]; removeMenuItem: (name: string) => void }; // Add this line
 };
-
 
 export default function App() {
   // Allows for changes to menu throughout the app
@@ -36,6 +35,11 @@ export default function App() {
       const updatedMenu = [...prevMenu, item];
       return updatedMenu;
     });
+  };
+
+  // Function to remove a menu item
+  const removeMenuItem = (name: string) => {
+    setMenu((prevMenu) => prevMenu.filter(item => item.name !== name));
   };
 
   return (
@@ -59,13 +63,20 @@ export default function App() {
           children={({ navigation }) => <DessertsScreen navigation={navigation} menu={menu} />} 
         />
         <Stack.Screen 
-        name='ChefScreen' 
-        children={({ navigation }) => 
-        <ChefScreen navigation={navigation} addMenuItem={addMenuItem} />} 
+          name='ChefScreen' 
+          children={({ navigation }) => 
+            <ChefScreen navigation={navigation} addMenuItem={addMenuItem} />} 
         />
         
-        <Stack.Screen name="EditScreen" component={EditScreen} />
-
+        <Stack.Screen 
+          name='EditScreen' 
+          children={({ navigation }) => 
+            <EditScreen 
+              navigation={navigation} 
+              menu={menu} 
+              removeMenuItem={removeMenuItem} 
+            />} 
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
