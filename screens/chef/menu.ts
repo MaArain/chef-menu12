@@ -4,7 +4,7 @@ export type MenuItem = {
     price: number;
     courseType: string;
     image: string;
-  };
+  }
   
   const menu: MenuItem[] = [
     // Starters

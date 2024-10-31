@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Image, Button, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, Button, ScrollView, TouchableOpacity, Alert } from 'react-native';
 import { NavigationProp } from '@react-navigation/native';
 import { MenuItem } from '../chef/menu'; 
 import { useState } from 'react';
@@ -25,6 +25,23 @@ export default function EditScreen({ navigation, menu, removeMenuItem }: EditScr
 
   const averagePrice = calculateAverage(filteredMenu);
 
+  const handleDelete = (itemName: string, removeMenuItem: (name: string) => void) => {
+    Alert.alert(
+      "Confirm Deletion",
+      `Are you sure you want to delete ${itemName}?`,
+      [
+        {
+          text: "Cancel",
+        },
+        {
+          text: "Delete",
+          onPress: () => removeMenuItem(itemName),
+        }
+      ],
+      { cancelable: true }
+    );
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="light" />
@@ -46,9 +63,12 @@ export default function EditScreen({ navigation, menu, removeMenuItem }: EditScr
         <View style={styles.menuContainer}>
           {filteredMenu.map((item) => (
             <View key={item.name} style={styles.menuItem}>
-              <TouchableOpacity onPress={() => removeMenuItem(item.name)} style={styles.deleteIcon}>
-                <Icon name="close-circle-outline" size={40} color="red" />
+
+              <TouchableOpacity onPress={() => handleDelete(item.name, removeMenuItem)} style={styles.deleteIcon}>
+                <Icon name="trash-bin-outline" size={40} color="red" />
               </TouchableOpacity>
+              
+              
               
               <Image source={{ uri: item.image }} style={styles.itemImage} />
               <Text style={styles.itemName}>{item.name}</Text>
@@ -96,7 +116,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     textAlign: 'center',
-    color: 'black',
+    color: 'red',
     textDecorationLine: 'underline',
   },
   scrollContainer: {
@@ -149,13 +169,13 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     borderRadius: 8, 
-    backgroundColor: 'white', 
     marginBottom: 10,
   },
   picker: {
     height: 80,
     width: '100%',
     color: 'black',
+    backgroundColor: 'white',
   },
   deleteIcon: {
     color: 'black',

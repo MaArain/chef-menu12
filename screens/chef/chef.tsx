@@ -42,7 +42,7 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
     setPrice('');
     setImage('');
 
-    alert(`Course Added:\nType: ${courseType}\nName: ${name}\nDescription: ${description}\nPrice: ${price}`);
+    alert(`Course Added:\nCourseType: ${courseType}\nName: ${name}\nDescription: ${description}\nPrice: ${price}`);
   };
 
   const pickImage = async () => {
@@ -104,8 +104,10 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
           />
 
           <TouchableOpacity onPress={pickImage}>
-           <Icon name="add-circle" size={50} color="blue" />
+           <Text>Add image below:</Text>
+           <Icon name="image-outline" size={100} color="blue" />
           </TouchableOpacity>
+
           {image ? <Image source={{ uri: image }} style={styles.imagePreview} /> : null}
 
           {errorMessage ? <Text style={styles.errorMessage}>{errorMessage}</Text> : null}
