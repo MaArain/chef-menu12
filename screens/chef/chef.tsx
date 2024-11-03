@@ -30,7 +30,7 @@ export default function ChefScreen({ navigation, addMenuItem }: ChefScreenProps)
       courseType: courseType.toLowerCase(),
       name,
       description,
-      price: parseFloat(price),
+      price: Number(price),
       image,
     };
 
